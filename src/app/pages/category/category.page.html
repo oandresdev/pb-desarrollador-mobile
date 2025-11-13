@@ -1,33 +1,30 @@
 <ion-header translucent>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home" text=""></ion-back-button>
+      <ion-back-button [defaultHref]="environment.TASK" text=""></ion-back-button>
     </ion-buttons>
     <ion-title>
       <ion-icon name="pricetags-outline" slot="start"></ion-icon>
       Categorías
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="addCategory()">
+      <ion-button (click)="addCategory()" color="light">
         <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true" class="ion-padding">
 
   <ion-list *ngIf="categories.length > 0; else noData">
     <ion-item-sliding *ngFor="let cat of categories">
-
-      <ion-item lines="full">
+      <ion-item lines="none" class="category-item">
         <ion-avatar slot="start" class="category-avatar">
           <ion-icon name="folder-outline"></ion-icon>
         </ion-avatar>
         <ion-label>
           <h2>{{ cat.name }}</h2>
-          <!-- <p>ID: {{ cat.id }}</p> -->
         </ion-label>
         <ion-buttons slot="end">
           <ion-button fill="clear" color="tertiary" (click)="editCategory(cat)">
@@ -52,7 +49,7 @@
 
   <ng-template #noData>
     <div class="empty-state ion-text-center">
-      <ion-icon name="folder-open-outline" size="large"></ion-icon>
+      <ion-icon name="folder-open-outline"></ion-icon>
       <h2>Sin categorías</h2>
       <p>Agrega tu primera categoría para comenzar a organizar tus tareas.</p>
     </div>

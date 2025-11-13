@@ -6,6 +6,7 @@ import { ICategory } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-category',
   templateUrl: './category.page.html',
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
   standalone: true
 })
 export class CategoryPage implements OnInit {
+  environment = environment;
   categories: ICategory[] = [];
 
   constructor(
@@ -95,9 +97,27 @@ export class CategoryPage implements OnInit {
   }
 
   async deleteCategory(id: string) {
-    await this.categoryService.delete(id);
-    await this.loadCategories();
-    this.showToast('Categoría eliminada');
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmar eliminación',
+      message: '¿Estás seguro que deseas eliminar esta categoría?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: async () => {
+            await this.categoryService.delete(id);
+            await this.loadCategories();
+            this.showToast('Categoría eliminada');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async showToast(message: string) {
@@ -106,6 +126,6 @@ export class CategoryPage implements OnInit {
   }
 
   goBackToTasks() {
-    this.router.navigate(['/home']);
+    this.router.navigate([environment.TASK]);
   }
 }

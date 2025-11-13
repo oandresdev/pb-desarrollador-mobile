@@ -1,43 +1,46 @@
 .filter-card {
-  margin-bottom: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.filter-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1rem;
-  color: var(--ion-color-primary);
+.task-card {
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-.create-category-btn {
-  margin-top: 8px;
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
-.task-list {
-  margin-top: 10px;
-}
-
-.task-item h2 {
-  font-size: 1.05rem;
-  font-weight: 500;
-}
-
-.task-item p {
-  font-size: 0.9rem;
-  color: var(--ion-color-medium);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.completed {
+.task-label h2.completed {
   text-decoration: line-through;
-  color: var(--ion-color-medium);
+  color: #999;
 }
 
-.no-tasks {
-  opacity: 0.6;
+.category-label {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 0.8em;
+  color: #000000b3;
+  margin-top: 4px;
+  background-color: #99999920;
+}
+
+.no-tasks ion-img {
+  max-width: 200px;
+  margin-bottom: 16px;
+}
+
+
+.task-card h2.completed {
+  text-decoration: line-through;
+  color: #999;
+  transition: all 0.2s ease;
+}
+
+.task-card ion-label {
+  transition: all 0.2s ease;
 }

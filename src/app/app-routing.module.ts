@@ -1,20 +1,25 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: environment.TASK,
     pathMatch: 'full'
   },
   {
-    path: 'home',
+    path: environment.TASK,
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: 'category',
+    path: environment.CATEGORY,
     loadChildren: () => import('./pages/category/category.module').then( m => m.CategoryPageModule)
   },
+  /* {
+    path: 'flag',
+    loadChildren: () => import('./pages/flag/flag.module').then( m => m.FlagPageModule)
+  }, */
 ];
 
 @NgModule({
