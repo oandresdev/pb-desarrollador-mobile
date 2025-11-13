@@ -1,0 +1,43 @@
+.filter-card {
+  margin-bottom: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+}
+
+.filter-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  color: var(--ion-color-primary);
+}
+
+.create-category-btn {
+  margin-top: 8px;
+}
+
+.task-list {
+  margin-top: 10px;
+}
+
+.task-item h2 {
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.task-item p {
+  font-size: 0.9rem;
+  color: var(--ion-color-medium);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: var(--ion-color-medium);
+}
+
+.no-tasks {
+  opacity: 0.6;
+}

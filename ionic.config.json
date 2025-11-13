@@ -1,0 +1,7 @@
+{
+  "name": "pb-desarrollador-mobile",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

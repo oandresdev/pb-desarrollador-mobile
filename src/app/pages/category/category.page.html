@@ -1,0 +1,60 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-icon name="pricetags-outline" slot="start"></ion-icon>
+      Categorías
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addCategory()">
+        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-list *ngIf="categories.length > 0; else noData">
+    <ion-item-sliding *ngFor="let cat of categories">
+
+      <ion-item lines="full">
+        <ion-avatar slot="start" class="category-avatar">
+          <ion-icon name="folder-outline"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ cat.name }}</h2>
+          <!-- <p>ID: {{ cat.id }}</p> -->
+        </ion-label>
+        <ion-buttons slot="end">
+          <ion-button fill="clear" color="tertiary" (click)="editCategory(cat)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="danger" (click)="deleteCategory(cat.id)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="tertiary" (click)="editCategory(cat)">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="deleteCategory(cat.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ng-template #noData>
+    <div class="empty-state ion-text-center">
+      <ion-icon name="folder-open-outline" size="large"></ion-icon>
+      <h2>Sin categorías</h2>
+      <p>Agrega tu primera categoría para comenzar a organizar tus tareas.</p>
+    </div>
+  </ng-template>
+</ion-content>
