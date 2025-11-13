@@ -66,6 +66,7 @@ public class PermissionHelper {
      *
      * @param plugin        The plugin the permission is being checked against
      * @param permission    The permission to be checked
+     *
      * @return              True if the permission has already been granted and false otherwise
      */
     public static boolean hasPermission(CordovaPlugin plugin, String permission) {

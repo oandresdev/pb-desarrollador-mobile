@@ -110,7 +110,7 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
         nativeToJsMessageQueue.addBridgeMode(new NativeToJsMessageQueue.OnlineEventsBridgeMode(new NativeToJsMessageQueue.OnlineEventsBridgeMode.OnlineEventsBridgeModeDelegate() {
             @Override
             public void setNetworkAvailable(boolean value) {
-                //sometimes this can be called after calling webView.destroy() on destroy()
+                //sometimes this can be called after calling webview.destroy() on destroy()
                 //thus resulting in a NullPointerException
                 if(webView!=null) {
                    webView.setNetworkAvailable(value);
@@ -165,7 +165,6 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
             LOG.d(TAG, "Enabled insecure file access");
             settings.setAllowFileAccess(true);
             settings.setAllowUniversalAccessFromFileURLs(true);
-            cookieManager.setAcceptFileSchemeCookies();
         }
 
         settings.setMediaPlaybackRequiresUserGesture(false);
@@ -175,20 +174,9 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
         String databasePath = webView.getContext().getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
         settings.setDatabaseEnabled(true);
 
-        // The default is to use the module's debuggable state to decide if the WebView inspector
-        // should be enabled. However, users can configure InspectableWebView preference to forcefully enable
-        // or disable the WebView inspector.
-        String inspectableWebview = preferences.getString("InspectableWebview", null);
-        boolean shouldEnableInspector = false;
-        if (inspectableWebview == null) {
-            ApplicationInfo appInfo = webView.getContext().getApplicationContext().getApplicationInfo();
-            shouldEnableInspector = (appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
-        }
-        else if ("true".equals(inspectableWebview)) {
-            shouldEnableInspector = true;
-        }
-
-        if (shouldEnableInspector) {
+        //Determine whether we're in debug or release mode, and turn on Debugging!
+        ApplicationInfo appInfo = webView.getContext().getApplicationContext().getApplicationInfo();
+        if ((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
             enableRemoteDebugging();
         }
 
@@ -249,7 +237,7 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
 
 
     /**
-     * Load the url into the WebView.
+     * Load the url into the webview.
      */
     @Override
     public void loadUrl(final String url, boolean clearNavigationStack) {
@@ -288,7 +276,7 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
      */
     @Override
     public boolean goBack() {
-        // Check WebView first to see if there is a history
+        // Check webview first to see if there is a history
         // This is needed to support curPage#diffLink, since they are added to parentEngine's history, but not our history url array (JQMobile behavior)
         if (webView.canGoBack()) {
             webView.goBack();

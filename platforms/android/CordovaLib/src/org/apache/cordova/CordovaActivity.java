@@ -42,14 +42,13 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.splashscreen.SplashScreen;
 
 /**
  * This class is the main Android activity that represents the Cordova
  * application. It should be extended by the user to load the specific
  * html file that contains the application.
  *
- * <p>As an example:</p>
+ * As an example:
  *
  * <pre>
  *     package org.apache.cordova.examples;
@@ -68,16 +67,17 @@ import androidx.core.splashscreen.SplashScreen;
  *     }
  * </pre>
  *
- * <p>Cordova xml configuration: Cordova uses a configuration file at
- * res/xml/config.xml to specify its settings. See the "Config.xml API" documentation for
- * configuration details at <a href="https://cordova.apache.org/docs">Apache Cordova Docs</a>.</p>
+ * Cordova xml configuration: Cordova uses a configuration file at
+ * res/xml/config.xml to specify its settings. See "The config.xml File"
+ * guide in cordova-docs at http://cordova.apache.org/docs for the documentation
+ * for the configuration. The use of the set*Property() methods is
+ * deprecated in favor of the config.xml file.
  *
- * <p>The use of the set*Property() methods is deprecated in favor of the config.xml file.</p>
  */
 public class CordovaActivity extends AppCompatActivity {
     public static String TAG = "CordovaActivity";
 
-    // The WebView for our app
+    // The webview for our app
     protected CordovaWebView appView;
 
     private static int ACTIVITY_STARTING = 0;
@@ -98,16 +98,11 @@ public class CordovaActivity extends AppCompatActivity {
     protected ArrayList<PluginEntry> pluginEntries;
     protected CordovaInterfaceImpl cordovaInterface;
 
-    private SplashScreen splashScreen;
-
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // Handle the splash screen transition.
-        splashScreen = SplashScreen.installSplashScreen(this);
-
         // need to activate preferences before super.onCreate to avoid "requestFeature() must be called before adding content" exception
         loadConfig();
 
@@ -130,6 +125,8 @@ public class CordovaActivity extends AppCompatActivity {
             // (as was the case in previous cordova versions)
             if (!preferences.getBoolean("FullscreenNotImmersive", false)) {
                 immersiveMode = true;
+                // The splashscreen plugin needs the flags set before we're focused to prevent
+                // the nav and title bars from flashing in.
                 setImmersiveUiVisibility();
             } else {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -155,9 +152,6 @@ public class CordovaActivity extends AppCompatActivity {
             appView.init(cordovaInterface, pluginEntries, preferences);
         }
         cordovaInterface.onCordovaInit(appView.getPluginManager());
-
-        // Setup the splash screen based on preference settings
-        cordovaInterface.pluginManager.postMessage("setupSplashScreen", splashScreen);
 
         // Wire the hardware volume controls to control media if desired.
         String volumePref = preferences.getString("DefaultVolumeStream", "");
@@ -205,7 +199,7 @@ public class CordovaActivity extends AppCompatActivity {
     /**
      * Construct the default web view object.
      * <p/>
-     * Override this to customize the WebView that is used.
+     * Override this to customize the webview that is used.
      */
     protected CordovaWebView makeWebView() {
         return new CordovaWebViewImpl(makeWebViewEngine());
@@ -226,7 +220,7 @@ public class CordovaActivity extends AppCompatActivity {
     }
 
     /**
-     * Load the url into the WebView.
+     * Load the url into the webview.
      */
     public void loadUrl(String url) {
         if (appView == null) {
@@ -249,7 +243,7 @@ public class CordovaActivity extends AppCompatActivity {
 
         if (this.appView != null) {
             // CB-9382 If there is an activity that started for result and main activity is waiting for callback
-            // result, we shouldn't stop WebView Javascript timers, as activity for result might be using them
+            // result, we shoudn't stop WebView Javascript timers, as activity for result might be using them
             boolean keepRunning = this.keepRunning || this.cordovaInterface.activityResultCallback != null;
             this.appView.handlePause(keepRunning);
         }
@@ -390,7 +384,6 @@ public class CordovaActivity extends AppCompatActivity {
         if ((errorUrl != null) && (!failingUrl.equals(errorUrl)) && (appView != null)) {
             // Load URL on UI thread
             me.runOnUiThread(new Runnable() {
-                @Override
                 public void run() {
                     me.appView.showWebPage(errorUrl, false, true, null);
                 }
@@ -400,7 +393,6 @@ public class CordovaActivity extends AppCompatActivity {
         else {
             final boolean exit = !(errorCode == WebViewClient.ERROR_HOST_LOOKUP);
             me.runOnUiThread(new Runnable() {
-                @Override
                 public void run() {
                     if (exit) {
                         me.appView.getView().setVisibility(View.GONE);
@@ -417,7 +409,6 @@ public class CordovaActivity extends AppCompatActivity {
     public void displayError(final String title, final String message, final String button, final boolean exit) {
         final CordovaActivity me = this;
         me.runOnUiThread(new Runnable() {
-            @Override
             public void run() {
                 try {
                     AlertDialog.Builder dlg = new AlertDialog.Builder(me);
@@ -426,7 +417,6 @@ public class CordovaActivity extends AppCompatActivity {
                     dlg.setCancelable(false);
                     dlg.setPositiveButton(button,
                             new AlertDialog.OnClickListener() {
-                                @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                     if (exit) {
@@ -491,7 +481,6 @@ public class CordovaActivity extends AppCompatActivity {
         return null;
     }
 
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         cordovaInterface.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
@@ -537,4 +526,5 @@ public class CordovaActivity extends AppCompatActivity {
         }
 
     }
+
 }
