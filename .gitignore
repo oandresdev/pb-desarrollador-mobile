@@ -7,7 +7,6 @@
 /.angular/
 .angular/
 
-/platforms/
 # Node modules and dependency files
 /node_modules/
 /package-lock.json
