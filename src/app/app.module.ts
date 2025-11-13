@@ -7,6 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { IonicStorageModule } from '@ionic/storage-angular';
 
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideRemoteConfig, getRemoteConfig } from '@angular/fire/remote-config';
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -16,6 +20,9 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     }),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
+
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideRemoteConfig(() => getRemoteConfig())
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
