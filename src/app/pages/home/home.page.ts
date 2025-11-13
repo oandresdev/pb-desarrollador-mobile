@@ -150,4 +150,7 @@ export class HomePage implements OnInit {
   goToCategories() {
     this.router.navigate(['/category']);
   }
+  trackById(index: number, item: ITask): string {
+    return item.id;
+  }
 }

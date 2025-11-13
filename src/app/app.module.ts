@@ -16,12 +16,17 @@ import { IonicStorageModule } from '@ionic/storage-angular';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot(
+      {
+        //mode: 'md', 
+        animated: false, // desactiva animaciones pesadas en dispositivos antiguos
+      }
+    ),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireRemoteConfigModule,
     AngularFireAnalyticsModule,
-     IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot(),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

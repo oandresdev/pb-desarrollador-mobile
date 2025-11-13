@@ -25,11 +25,8 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item lines="none">
-        <ion-select
-          interface="popover"
-          placeholder="Selecciona una categoría"
-          (ionChange)="filterTasksByCategory($event)"
-        >
+        <ion-select interface="popover" placeholder="Selecciona una categoría"
+          (ionChange)="filterTasksByCategory($event)">
           <ion-select-option [value]="null">Todas</ion-select-option>
           <ion-select-option *ngFor="let cat of categories" [value]="cat.id">
             {{ cat.name }}
@@ -40,16 +37,8 @@
   </ion-card>
 
   <ion-list *ngIf="tasks.length > 0; else noTasks" class="task-list">
-    <ion-item
-      *ngFor="let task of tasks"
-      class="task-item"
-      lines="inset"
-    >
-      <ion-checkbox
-        slot="start"
-        [(ngModel)]="task.completed"
-        (ionChange)="toggleTask(task)"
-      ></ion-checkbox>
+    <ion-item *ngFor="let task of tasks; trackBy: trackById" class="task-item" lines="inset">
+      <ion-checkbox slot="start" [checked]="task.completed" (ionChange)="toggleTask(task)"></ion-checkbox>
 
       <ion-label>
         <h2 [ngClass]="{ completed: task.completed }">{{ task.title }}</h2>
@@ -59,15 +48,18 @@
         </p>
       </ion-label>
 
-      <ion-button
-        fill="clear"
-        color="danger"
-        (click)="deleteTask(task.id)"
-      >
+      <ion-button fill="clear" color="danger" (click)="deleteTask(task.id)">
         <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
       </ion-button>
     </ion-item>
   </ion-list>
+
+  <ng-template #noTasks>
+    <div class="no-tasks ion-text-center ion-padding">
+      <ion-icon name="document-outline" size="large"></ion-icon>
+      <p>No hay tareas registradas</p>
+    </div>
+  </ng-template>
 
   <ng-template #noTasks>
     <div class="no-tasks ion-text-center ion-padding">
