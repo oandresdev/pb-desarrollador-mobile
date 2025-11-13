@@ -21,9 +21,9 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     }),
     AppRoutingModule,
 
-    AngularFireModule.initializeApp(environment.firebase),
+    /* AngularFireModule.initializeApp(environment.firebase),
     AngularFireRemoteConfigModule,
-    AngularFireAnalyticsModule,
+    AngularFireAnalyticsModule, */
 
     IonicStorageModule.forRoot(),
   ],
