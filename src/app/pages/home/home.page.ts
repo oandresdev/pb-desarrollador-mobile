@@ -118,10 +118,8 @@ export class HomePage implements OnInit {
     });
     await titleAlert.present();
   }
-
-
   async toggleTask(task: ITask) {
-    await this.taskService.update(task);
+    await this.taskService.toggleComplete(task.id);
     await this.loadTasks();
   }
 

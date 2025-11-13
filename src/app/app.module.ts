@@ -4,11 +4,6 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { environment } from 'src/environments/environment';
-
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireRemoteConfigModule } from '@angular/fire/compat/remote-config';
-import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
 
 import { IonicStorageModule } from '@ionic/storage-angular';
 
@@ -20,11 +15,6 @@ import { IonicStorageModule } from '@ionic/storage-angular';
       animated: false,
     }),
     AppRoutingModule,
-
-    /* AngularFireModule.initializeApp(environment.firebase),
-    AngularFireRemoteConfigModule,
-    AngularFireAnalyticsModule, */
-
     IonicStorageModule.forRoot(),
   ],
   providers: [
