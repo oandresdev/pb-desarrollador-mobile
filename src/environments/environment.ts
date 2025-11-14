@@ -2,6 +2,10 @@
 export const environment = {
   production: false,
 
+  //Ruttas
+  CATEGORY: 'category',
+  TASK: 'task',
+
   firebase: {
     apiKey: "AIzaSyBke3LCLEJTReLtc-IJvhsI0MumtJW2dIg",
     authDomain: "prueba-tecnica-caf0d.firebaseapp.com",

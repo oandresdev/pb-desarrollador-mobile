@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -12,16 +12,17 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireRemoteConfigModule } from '@angular/fire/compat/remote-config';
 import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
 import { IonicStorageModule } from '@ionic/storage-angular';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    /* AngularFireModule.initializeApp(environment.firebase),
     AngularFireRemoteConfigModule,
-    AngularFireAnalyticsModule,
-     IonicStorageModule.forRoot(),
+    AngularFireAnalyticsModule, */
+    IonicStorageModule.forRoot(),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

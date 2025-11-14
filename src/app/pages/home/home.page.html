@@ -1,14 +1,16 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Tareas</ion-title>
-
-    <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="addTask()">
-        <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
+    <ion-title class="toolbar-title">
+      <ion-icon name="checkmark-done-outline" slot="start"></ion-icon>
+      Tareas
+    </ion-title>
+    <ion-buttons slot="end" class="header-buttons">
+      <ion-button fill="clear" (click)="addTask()" class="add-btn">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Agregar
       </ion-button>
-
-      <ion-button fill="clear" (click)="goToCategories()">
-        <ion-icon name="folder-outline" slot="icon-only"></ion-icon>
+      <ion-button fill="clear" (click)="goToCategories()" class="category-btn">
+        <ion-icon name="folder-open-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -16,63 +18,51 @@
 
 <ion-content class="ion-padding">
 
-  <ion-card class="filter-card">
-    <ion-card-header>
-      <ion-card-title class="filter-title">
-        <ion-icon name="funnel-outline"></ion-icon>
-        <span>Filtrar por Categoría</span>
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item lines="none">
-        <ion-select
-          interface="popover"
-          placeholder="Selecciona una categoría"
-          (ionChange)="filterTasksByCategory($event)"
-        >
-          <ion-select-option [value]="null">Todas</ion-select-option>
-          <ion-select-option *ngFor="let cat of categories" [value]="cat.id">
-            {{ cat.name }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-card-content>
+  <!-- Card de Filtro Flotante -->
+  <ion-card class="filter-card ion-margin-bottom ion-padding">
+    <ion-item lines="none">
+      <ion-icon name="funnel-outline" slot="start"></ion-icon>
+      <ion-select interface="popover" placeholder="Filtrar por categoría" (ionChange)="filterTasksByCategory($event)">
+        <ion-select-option [value]="null">Todas</ion-select-option>
+        <ion-select-option *ngFor="let cat of categories" [value]="cat.id">
+          {{ cat.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
   </ion-card>
 
+  <!-- Lista de tareas -->
   <ion-list *ngIf="tasks.length > 0; else noTasks" class="task-list">
-    <ion-item
-      *ngFor="let task of tasks"
-      class="task-item"
-      lines="inset"
-    >
-      <ion-checkbox
-        slot="start"
-        [(ngModel)]="task.completed"
-        (ionChange)="toggleTask(task)"
-      ></ion-checkbox>
+    <ion-card *ngFor="let task of tasks; trackBy: trackById" class="task-card ion-margin-bottom">
+      <ion-item lines="none">
+        <ion-checkbox slot="start" [checked]="task.completed" (ionChange)="toggleTask(task)"></ion-checkbox>
 
-      <ion-label>
-        <h2 [ngClass]="{ completed: task.completed }">{{ task.title }}</h2>
-        <p *ngIf="task.categoryId">
-          <ion-icon name="pricetag-outline"></ion-icon>
-          {{ getCategoryName(task.categoryId) }}
-        </p>
-      </ion-label>
+        <ion-label>
+          <h2 [ngClass]="{ completed: task.completed }">{{ task.title }}</h2>
+          <p *ngIf="task.categoryId" class="category-label">
+            {{ getCategoryName(task.categoryId) }}
+          </p>
+        </ion-label>
 
-      <ion-button
-        fill="clear"
-        color="danger"
-        (click)="deleteTask(task.id)"
-      >
-        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-      </ion-button>
-    </ion-item>
+        <ion-button fill="clear" color="danger" (click)="deleteTask(task.id)">
+          <ion-icon slot="icon-only" name="trash-outline" style="font-size: 25px;"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-card>
   </ion-list>
 
+  <!-- Mensaje cuando no hay tareas -->
   <ng-template #noTasks>
     <div class="no-tasks ion-text-center ion-padding">
-      <ion-icon name="document-outline" size="large"></ion-icon>
-      <p>No hay tareas registradas</p>
+      <ion-icon name="clipboard-outline" style="font-size: 64px; opacity: 0.6; margin-bottom: 16px;">
+      </ion-icon>
+      <h3>No tienes tareas registradas</h3>
+      <p>Agrega tu primera tarea para comenzar a organizar tu día.</p>
+
+      <ion-button color="primary" fill="solid" (click)="addTask()">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Agregar Tarea
+      </ion-button>
     </div>
   </ng-template>
 
