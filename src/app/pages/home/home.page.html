@@ -54,10 +54,15 @@
   <!-- Mensaje cuando no hay tareas -->
   <ng-template #noTasks>
     <div class="no-tasks ion-text-center ion-padding">
-      <ion-img src="assets/empty-tasks.svg"></ion-img>
+      <ion-icon name="clipboard-outline" style="font-size: 64px; opacity: 0.6; margin-bottom: 16px;">
+      </ion-icon>
       <h3>No tienes tareas registradas</h3>
       <p>Agrega tu primera tarea para comenzar a organizar tu día.</p>
-      <ion-button color="primary" fill="solid" (click)="addTask()">Agregar Tarea</ion-button>
+
+      <ion-button color="primary" fill="solid" (click)="addTask()">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Agregar Tarea
+      </ion-button>
     </div>
   </ng-template>
 
